@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <fcntl.h>
-#include "../src/lab.h"
+#include "../src/lab.c"
 
 static void explain_waitpid(int status)
 {
