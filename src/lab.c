@@ -49,6 +49,12 @@ char **cmd_parse(char const *line)
         return NULL;
     }
 
+    if (line == NULL || strlen(line) == 0)
+    {
+        tokens[0] = NULL;
+        return tokens;
+    }
+
     char *token;
     char *line_copy = strdup(line);
     if (line_copy == NULL)
@@ -194,7 +200,6 @@ bool do_builtin(struct shell *sh, char **argv)
 
 void sh_init(struct shell *sh)
 {
-    (void)sh;
     sh->shell_terminal = STDIN_FILENO;
     sh->shell_pgid = getpid();
     sh->shell_is_interactive = isatty(sh->shell_terminal);
