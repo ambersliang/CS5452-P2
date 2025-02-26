@@ -152,8 +152,9 @@ bool do_builtin(struct shell *sh, char **argv)
     }
     if (strcmp(argv[0], "exit") == 0)
     {
-        return true; 
-    } if (strcmp(argv[0], "cd") == 0)
+        exit(EXIT_SUCCESS);
+    } 
+    else if (strcmp(argv[0], "cd") == 0)
     {
         if (argv[1] == NULL)
         {
@@ -188,6 +189,7 @@ bool do_builtin(struct shell *sh, char **argv)
 
     return false;
 }
+
 
 void sh_init(struct shell *sh)
 {
