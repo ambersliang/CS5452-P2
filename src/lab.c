@@ -49,12 +49,6 @@ char **cmd_parse(char const *line)
         return NULL;
     }
 
-    if (line == NULL || strlen(line) == 0)
-    {
-        tokens[0] = NULL;
-        return tokens;
-    }
-
     char *token;
     char *line_copy = strdup(line);
     if (line_copy == NULL)
@@ -150,10 +144,7 @@ char *trim_white(char *line)
 
 bool do_builtin(struct shell *sh, char **argv)
 {
-    if (argv[0] == NULL)
-    {
-        return true;
-    }
+    UNUSED(sh);
     if (strcmp(argv[0], "-v") == 0)  
     {
         printf("Shell version %d.%d\n", lab_VERSION_MAJOR, lab_VERSION_MINOR);
@@ -161,7 +152,7 @@ bool do_builtin(struct shell *sh, char **argv)
     }
     if (strcmp(argv[0], "exit") == 0)
     {
-        return false; 
+        return true; 
     } if (strcmp(argv[0], "cd") == 0)
     {
         if (argv[1] == NULL)
@@ -179,7 +170,7 @@ bool do_builtin(struct shell *sh, char **argv)
         {
             if (chdir(argv[1]) != 0)
             {
-                perror("cd");
+                perror("cd failed");
             }
         }
         return true; 
@@ -200,6 +191,7 @@ bool do_builtin(struct shell *sh, char **argv)
 
 void sh_init(struct shell *sh)
 {
+    UNUSED(sh);
     sh->shell_terminal = STDIN_FILENO;
     sh->shell_pgid = getpid();
     sh->shell_is_interactive = isatty(sh->shell_terminal);
